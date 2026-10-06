@@ -1,0 +1,27 @@
+import MarqueeText from "react-marquee-text";
+import "react-marquee-text/dist/styles.css";
+
+const Marquee = async () => {
+  const res = await fetch("https://news-api-v2.vercel.app/api/news?limit=12");
+  const data = await res.json();
+  const headlines = data.data;
+
+  console.log(headlines);
+  return (
+    <div className="bg-red-600 text-white">
+      <div className="flex ">
+        <div className="bg-red-800 text-white px-5 py-1">সর্বশেষ</div>
+        <MarqueeText direction="right" duration={10} className="py-1">
+          {headlines.map((h) => (
+            <span key={h.id}>
+              <span>{h.title}</span>
+              <span className="mx-5">●</span>
+            </span>
+          ))}
+        </MarqueeText>
+      </div>
+    </div>
+  );
+};
+
+export default Marquee;
